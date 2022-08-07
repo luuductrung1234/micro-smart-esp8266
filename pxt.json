@@ -14,14 +14,15 @@
         "blynk.ts",
         "sntp.ts",
         "telegram.ts",
-        "thingspeak.ts"
+        "thingspeak.ts",
+        "coffee.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "public": true,
     "targetVersions": {
-        "target": "4.0.11",
+        "target": "5.0.12",
         "targetId": "microbit"
     },
     "supportedTargets": [
