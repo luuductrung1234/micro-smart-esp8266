@@ -37,19 +37,20 @@ namespace esp8266 {
     //% blockGap=8
     //% blockId=esp8266_get_first_coffee_request
     //% block="send message to Sample Coffee:|Coffee ID %coffeeId"
-    export function getCoffeeRequest(coffeeId: number) {
+    export function getCoffeeRequest(coffeeId: number): object {
 
         // Reset the upload successful flag.
         requestSent = false
 
         // Make sure the WiFi is connected.
-        if (isWifiConnected() == false) return
+        if (isWifiConnected() == false) 
+            return null
 
         // Connect to Telegram. Return if failed.
         if (sendCommand("AT+CIPSTART=\"SSL\",\"" 
             + SAMPLE_API_URL 
             + "\",443", "OK", 10000) == false) 
-            return
+            return null
 
         // Construct the data to send.
         let data = "GET /coffee/hot/" + coffeeId
@@ -61,10 +62,11 @@ namespace esp8266 {
         sendCommand(data)
 
         // Return if "SEND OK" is not received.
-        if (getResponse("SEND OK", 1000) == "") {
+        let sentStatus = getResponse("SEND OK", 1000)
+        if (sentStatus == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return
+            return null
         }
 
         // Validate the response from Telegram.
@@ -72,7 +74,7 @@ namespace esp8266 {
         if (response == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return
+            return null
         }
 
         // Close the connection.
@@ -80,6 +82,6 @@ namespace esp8266 {
 
         // Set the upload successful flag and return.
         requestSent = true
-        return
+        return JSON.parse(response)
     }
 }
