@@ -78,14 +78,13 @@ namespace esp8266 {
         }
 
         // Get the pin value.
-        let response = getResponse("[\"", 200)
-        let value = response.slice(response.indexOf("[\"") + 2, response.indexOf("\"]"))
+        let response = getResponse("{\"", 200)
 
         // Close the connection.
         sendCommand("AT+CIPCLOSE", "OK", 1000)
 
         // Set the upload successful flag and return.
         requestSent = true
-        return value
+        return response
     }
 }
