@@ -71,7 +71,7 @@ namespace esp8266 {
         }
 
         // Return if Sample API response is not 200.
-        if (getResponse("304 OK", 10000) == "") {
+        if (getResponse("title", 10000) == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
             return '404'
