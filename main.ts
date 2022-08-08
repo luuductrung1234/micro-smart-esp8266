@@ -125,6 +125,34 @@ namespace esp8266 {
 
 
     /**
+     * Get the specific response from ESP8266.
+     * Return the line start with the specific response.
+     * @param timeout Timeout in milliseconds.
+     */
+    //% blockHidden=true
+    //% blockId=esp8266_get_response_v2
+    export function getResponseV2(timeout: number = 100): string {
+        let timestamp = input.runningTime()
+        while (true) {
+            // Timeout.
+            if (input.runningTime() - timestamp > timeout) {
+                break
+            }
+
+            // Read until the end of the line.
+            rxData += serial.readString()
+            if (rxData.includes("\r\n")) {
+                // Trim the Rx data before loop again.
+                rxData = rxData.slice(rxData.indexOf("\r\n") + 2)
+            }
+        }
+
+        return rxData
+    }
+
+
+
+    /**
      * Format the encoding of special characters in the url.
      * @param url The url that we want to format.
      */

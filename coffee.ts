@@ -44,13 +44,13 @@ namespace esp8266 {
 
         // Make sure the WiFi is connected.
         if (isWifiConnected() == false) 
-            return null
+            return '1'
 
         // Connect to Telegram. Return if failed.
         if (sendCommand("AT+CIPSTART=\"SSL\",\"" 
             + SAMPLE_API_URL 
             + "\",443", "OK", 10000) == false) 
-            return null
+            return '2'
 
         // Construct the data to send.
         let data = "GET /coffee/hot/" + coffeeId
@@ -66,15 +66,15 @@ namespace esp8266 {
         if (sentStatus == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return null
+            return '3'
         }
 
         // Validate the response from Telegram.
-        let response = getResponse("\"ok\":true", 1000)
+        let response = getResponseV2(1000)
         if (response == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return null
+            return '4'
         }
 
         // Close the connection.
