@@ -50,7 +50,7 @@ namespace esp8266 {
         if (sendCommand("AT+CIPSTART=\"SSL\",\"" 
             + SAMPLE_API_URL 
             + "\",443", "OK", 10000) == false) 
-            return '2'
+            return '500'
 
         // Construct the data to send.
         let data = "GET /coffee/hot/" + coffeeId
@@ -66,22 +66,25 @@ namespace esp8266 {
         if (sentStatus == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return '3'
+            return '400'
         }
 
-        // Validate the response from Telegram.
-        let response = getResponseV2(1000)
-        if (response == "") {
+        // Return if Sample API response is not 200.
+        if (getResponse("HTTP/1.1 200 OK", 10000) == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return '4'
+            return '404'
         }
+
+        // Get the pin value.
+        let response = getResponse("[\"", 200)
+        value = response.slice(response.indexOf("[\"") + 2, response.indexOf("\"]"))
 
         // Close the connection.
         sendCommand("AT+CIPCLOSE", "OK", 1000)
 
         // Set the upload successful flag and return.
         requestSent = true
-        return response
+        return value
     }
 }
