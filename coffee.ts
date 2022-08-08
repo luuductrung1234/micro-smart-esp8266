@@ -78,7 +78,7 @@ namespace esp8266 {
         }
 
         // Get the pin value.
-        let response = getResponse("{\"", 200)
+        let response = getResponse("title", 200)
 
         // Close the connection.
         sendCommand("AT+CIPCLOSE", "OK", 1000)
