@@ -37,7 +37,7 @@ namespace esp8266 {
     //% blockGap=8
     //% blockId=esp8266_get_first_coffee_request
     //% block="send message to Sample Coffee:|Coffee ID %coffeeId"
-    export function getCoffeeRequest(coffeeId: number): object {
+    export function getCoffeeRequest(coffeeId: number): string {
 
         // Reset the upload successful flag.
         requestSent = false
@@ -82,6 +82,6 @@ namespace esp8266 {
 
         // Set the upload successful flag and return.
         requestSent = true
-        return JSON.parse(response)
+        return response
     }
 }
