@@ -44,13 +44,16 @@ namespace esp8266 {
 
         // Make sure the WiFi is connected.
         if (isWifiConnected() == false) 
-            return '1'
+            return null
 
-        // Connect to Telegram. Return if failed.
-        if (sendCommand("AT+CIPSTART=\"SSL\",\"" 
+        // Connect to ThingSpeak. Return if failed.
+        if (sendCommand("AT+CIPSTART=\"TCP\",\"" 
             + SAMPLE_API_URL 
-            + "\",443", "OK", 10000) == false) 
+            + "\",80", "OK", 10000) == false) {
+            // Close the connection and return.
+            sendCommand("AT+CIPCLOSE", "OK", 1000)
             return '500'
+        }
 
         // Construct the data to send.
         let data = "GET /coffee/hot/" + coffeeId
@@ -58,7 +61,7 @@ namespace esp8266 {
         data += "Host: " + SAMPLE_API_URL + "\r\n"
 
         // Send the data.
-        sendCommand("AT+CIPSEND=" + (data.length + 2))
+        sendCommand("AT+CIPSEND=" + (data.length + 2), "OK")
         sendCommand(data)
 
         // Return if "SEND OK" is not received.
