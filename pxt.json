@@ -15,7 +15,8 @@
         "sntp.ts",
         "telegram.ts",
         "thingspeak.ts",
-        "coffee.ts"
+        "coffee.ts",
+        "eshop.ts"
     ],
     "testFiles": [
         "test.ts"
