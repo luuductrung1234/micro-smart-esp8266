@@ -6,7 +6,7 @@
  * Email:   s3951127@rmit.edu.vn
  *******************************************************************************/
 
-const SAMPLE_API_URL = "https://api.sampleapis.com"
+const SAMPLE_API_URL = "api.sampleapis.com"
 
 namespace esp8266 {
     // Flag to indicate whether the request was sent successfully.
@@ -46,17 +46,16 @@ namespace esp8266 {
         if (isWifiConnected() == false) 
             return null
 
-        // Connect to ThingSpeak. Return if failed.
-        if (sendCommand("AT+CIPSTART=\"TCP\",\"" 
+        // Connect to server. Return if failed.
+        if (sendCommand("AT+CIPSTART=\"SSL\",\"" 
             + SAMPLE_API_URL 
-            + "\",80", "OK", 10000) == false) {
-            // Close the connection and return.
-            sendCommand("AT+CIPCLOSE", "OK", 1000)
+            + "\",443", "OK", 10000) == false) 
             return '500'
-        }
 
         // Construct the data to send.
-        let data = "GET /coffee/hot/" + coffeeId +" HTTP/1.1\r\n"
+        let data = "GET /coffee/hot/" + coffeeId
+        data += " HTTP/1.1\r\n"
+        data += "Host: " + SAMPLE_API_URL + "\r\n"
 
         // Send the data.
         sendCommand("AT+CIPSEND=" + (data.length + 2), "OK")
@@ -71,14 +70,12 @@ namespace esp8266 {
         }
 
         // Return if Sample API response is not 200.
-        if (getResponse("title", 10000) == "") {
+        let response = getResponse("title", 10000)
+        if (response == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
             return '404'
         }
-
-        // Get the pin value.
-        let response = getResponse("title", 200)
 
         // Close the connection.
         sendCommand("AT+CIPCLOSE", "OK", 1000)
