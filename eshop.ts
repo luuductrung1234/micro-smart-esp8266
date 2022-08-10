@@ -6,7 +6,7 @@
  * Email:   s3951127@rmit.edu.vn
  *******************************************************************************/
 
-const ESHOP_API_URL = "microsmartdemo-env.eba-nudppsiw.ap-southeast-1.elasticbeanstalk.com"
+const ESHOP_API_URL = "18.136.9.106"
 
 namespace esp8266 {
     // Flag to indicate whether the request was sent successfully.
@@ -45,19 +45,14 @@ namespace esp8266 {
         if (isWifiConnected() == false)
             return null
 
-        // Connect to server. Return if failed.
-        // if (sendCommand("AT+CIPSTART=\"TCP\",\"" 
-        //     + ESHOP_API_URL 
-        //     + "\",80", "OK", 10000) == false)
-        // {
-        //     sendCommand("AT+CIPCLOSE", "OK", 1000)
-        //     return '500'
-        // }
-
-        if (sendCommand("AT+CIPSTART=\"SSL\",\""
-            + ESHOP_API_URL
-            + "\",443", "OK", 10000) == false)
+        //Connect to server. Return if failed.
+        if (sendCommand("AT+CIPSTART=\"TCP\",\"" 
+            + ESHOP_API_URL 
+            + "\",80", "OK", 10000) == false)
+        {
+            sendCommand("AT+CIPCLOSE", "OK", 1000)
             return '500'
+        }
             
 
         // Construct the data to send.
