@@ -83,6 +83,9 @@ namespace esp8266 {
 
         // Set the upload successful flag and return.
         eshopRequestSent = true
-        return response.replace("+IPD,15:", "")
+        let splittedResponse = response.split(":")
+        if (splittedResponse.length < 2)
+            return null
+        return splittedResponse[1]
     }
 }
