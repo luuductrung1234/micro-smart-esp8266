@@ -51,7 +51,7 @@ namespace esp8266 {
             + "\",80", "OK", 10000) == false)
         {
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return '500'
+            return null
         }
             
 
@@ -67,7 +67,7 @@ namespace esp8266 {
         if (sentStatus == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return '400'
+            return null
         }
 
         // Return if Sample API response is not 200.
@@ -75,7 +75,7 @@ namespace esp8266 {
         if (response == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
-            return '404'
+            return null
         }
 
         // Close the connection.
