@@ -6,7 +6,7 @@
  * Email:   s3951127@rmit.edu.vn
  *******************************************************************************/
 
-const ESHOP_API_URL = "http://microsmartdemo-env.eba-nudppsiw.ap-southeast-1.elasticbeanstalk.com"
+const ESHOP_API_URL = "microsmartdemo-env.eba-nudppsiw.ap-southeast-1.elasticbeanstalk.com"
 
 namespace esp8266 {
     // Flag to indicate whether the request was sent successfully.
