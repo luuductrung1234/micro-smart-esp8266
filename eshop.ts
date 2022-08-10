@@ -83,6 +83,6 @@ namespace esp8266 {
 
         // Set the upload successful flag and return.
         eshopRequestSent = true
-        return response
+        return response.replace("+IPD,15:", "")
     }
 }
