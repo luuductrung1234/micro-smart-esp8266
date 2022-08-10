@@ -46,13 +46,18 @@ namespace esp8266 {
             return null
 
         // Connect to server. Return if failed.
-        if (sendCommand("AT+CIPSTART=\"TCP\",\"" 
-            + ESHOP_API_URL 
-            + "\",80", "OK", 10000) == false)
-        {
-            sendCommand("AT+CIPCLOSE", "OK", 1000)
+        // if (sendCommand("AT+CIPSTART=\"TCP\",\"" 
+        //     + ESHOP_API_URL 
+        //     + "\",80", "OK", 10000) == false)
+        // {
+        //     sendCommand("AT+CIPCLOSE", "OK", 1000)
+        //     return '500'
+        // }
+
+        if (sendCommand("AT+CIPSTART=\"SSL\",\""
+            + ESHOP_API_URL
+            + "\",443", "OK", 10000) == false)
             return '500'
-        }
             
 
         // Construct the data to send.
