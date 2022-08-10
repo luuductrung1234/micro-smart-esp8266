@@ -6,7 +6,7 @@
  * Email:   s3951127@rmit.edu.vn
  *******************************************************************************/
 
-const ESHOP_API_URL = "18.136.9.106"
+const ESHOP_API_URL = "18.140.168.23"
 
 namespace esp8266 {
     // Flag to indicate whether the request was sent successfully.
