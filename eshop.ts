@@ -71,7 +71,7 @@ namespace esp8266 {
         }
 
         // Return if Sample API response is not 200.
-        let response = getResponse("s1", 10000)
+        let response = getResponse("+IPD", 10000)
         if (response == "") {
             // Close the connection and return.
             sendCommand("AT+CIPCLOSE", "OK", 1000)
